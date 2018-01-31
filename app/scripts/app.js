@@ -55,16 +55,10 @@ Instructions:
 
   window.addEventListener('WebComponentsReady', function() {
     home = document.querySelector('section[data-route="home"]');
-    /*
-    Your code goes here! Uncomment the next line when you're ready to start!
-     */
 
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
-
-
       addSearchHeader(response.query);
-
       response.results.map(function(url) {
         getJSON(url).then(createPlanetThumb);
       });
@@ -72,8 +66,5 @@ Instructions:
     .catch(function(e){
       console.log(e);
     });
-
-
-
   });
 })(document);

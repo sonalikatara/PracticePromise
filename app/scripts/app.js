@@ -1,10 +1,8 @@
 /*
 Instructions:
-(1) Refactor .forEach below to create a sequence of Promises that always resolves in the same
-    order it was created.
-  (a) Fetch each planet's JSON from the array of URLs in the search results.
-  (b) Call createPlanetThumb on each planet's response data to add it to the page.
-(2) Use developer tools to determine if the planets are being fetched in series or in parallel.
+(1) Use .map to fetch all the planets in parallel.
+  (a) Call .map on an array and pass it a function.
+  (b) .map will execute the function against each element in the array immediately.
  */
 
 // Inline configuration for jshint below. Prevents `gulp jshint` from failing with quiz starter code.
@@ -36,14 +34,12 @@ Instructions:
   }
 
   /**
-   * XHR wrapped in a promise.
+   * XHR wrapped in a promise
    * @param  {String} url - The URL to fetch.
    * @return {Promise}    - A Promise that resolves when the XHR succeeds and fails otherwise.
    */
   function get(url) {
-    return fetch(url, {
-      method: 'get'
-    });
+    return fetch(url);
   }
 
   /**
@@ -60,24 +56,24 @@ Instructions:
   window.addEventListener('WebComponentsReady', function() {
     home = document.querySelector('section[data-route="home"]');
     /*
-    Refactor this code!
+    Your code goes here! Uncomment the next line when you're ready to start!
      */
+
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
-      var sequence = Promise.resolve();
+
 
       addSearchHeader(response.query);
 
-      response.results.forEach(function(url) {
-        //getJSON(url).then(createPlanetThumb);
-        sequence = sequence.then(function(){
-          return getJSON(url);
-        })
-        .then(createPlanetThumb);
+      response.results.map(function(url) {
+        getJSON(url).then(createPlanetThumb);
       });
     })
     .catch(function(e){
       console.log(e);
     });
+
+
+
   });
 })(document);
